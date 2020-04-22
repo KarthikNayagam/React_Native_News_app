@@ -1,49 +1,90 @@
-import React, {useState} from 'react';
-import Header from './components/Header';
-import ListItem from './components/ListItem';
-import AddItem from './components/AddItem';
-import {View, Text, FlatList, StyleSheet, Alert} from 'react-native';
-import uuid from 'react-native-uuid';
-const App = () => {
-  const [items, setItems] = useState([
-    {id: uuid.v1(), text: 'Milk'},
-    {id: uuid.v1(), text: 'Eggs'},
-    {id: uuid.v1(), text: 'Juice'},
-    {id: uuid.v1(), text: 'Bread'},
-  ]);
-  const deleteItem = (id) => {
-    setItems((prevItems) => {
-      return prevItems.filter((item) => item.id != id);
-    });
-  };
-  const addItem = (text) => {
-    if (!text) {
-      Alert.alert('Error', 'Please enter an item');
-    } else {
-      setItems((prevItems) => {
-        return [{id: uuid.v1(), text}, ...prevItems];
-      });
-    }
-  };
+/**
+ * Sample React Native App
+ * https://github.com/facebook/react-native
+ *
+ * @format
+ * @flow strict-local
+ */
+
+import React from 'react';
+import {
+  SafeAreaView,
+  StyleSheet,
+  ScrollView,
+  View,
+  Text,
+  StatusBar,
+} from 'react-native';
+
+import {
+  Header,
+  LearnMoreLinks,
+  Colors,
+  DebugInstructions,
+  ReloadInstructions,
+} from 'react-native/Libraries/NewAppScreen';
+
+const App: () => React$Node = () => {
   return (
-    <View className={styles.mainContainer}>
-      <Header title="Shopping List" />
-      <AddItem addItem={addItem} />
-      <FlatList
-        data={items}
-        renderItem={({item}) => (
-          <ListItem item={item} deleteItem={deleteItem} />
-        )}
-        keyExtractor={(item) => item.id}
-      />
-    </View>
+    <>
+      <StatusBar barStyle="dark-content" />
+      <SafeAreaView>
+        <ScrollView
+          contentInsetAdjustmentBehavior="automatic"
+          style={styles.scrollView}>
+          <Header />
+          {global.HermesInternal == null ? null : (
+            <View style={styles.engine}>
+              <Text style={styles.footer}>Engine: Hermes</Text>
+            </View>
+          )}
+          <View style={styles.body}>
+            <View style={styles.sectionContainer}>
+              <Text style={styles.sectionTitle}>News App</Text>
+            </View>
+          </View>
+        </ScrollView>
+      </SafeAreaView>
+    </>
   );
 };
 
 const styles = StyleSheet.create({
-  mainContainer: {
-    flex: 1,
-    paddingTop: 60,
+  scrollView: {
+    backgroundColor: Colors.lighter,
+  },
+  engine: {
+    position: 'absolute',
+    right: 0,
+  },
+  body: {
+    backgroundColor: Colors.white,
+  },
+  sectionContainer: {
+    marginTop: 32,
+    paddingHorizontal: 24,
+  },
+  sectionTitle: {
+    fontSize: 24,
+    fontWeight: '600',
+    color: Colors.black,
+  },
+  sectionDescription: {
+    marginTop: 8,
+    fontSize: 18,
+    fontWeight: '400',
+    color: Colors.dark,
+  },
+  highlight: {
+    fontWeight: '700',
+  },
+  footer: {
+    color: Colors.dark,
+    fontSize: 12,
+    fontWeight: '600',
+    padding: 4,
+    paddingRight: 12,
+    textAlign: 'right',
   },
 });
 
