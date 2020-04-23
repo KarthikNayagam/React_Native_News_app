@@ -1,17 +1,46 @@
-import React, {Component} from 'react';
-import {Container, Header, Content, Tab, Tabs} from 'native-base';
+import React, {Component, useState} from 'react';
+import {
+  Container,
+  Header,
+  Content,
+  Tab,
+  Tabs,
+  ScrollableTab,
+} from 'native-base';
 import HeaderTitle from './Header';
-// import Tab1 from './tabOne';
-// import Tab2 from './tabTwo';
-// import Tab3 from './tabThree';
+import RenderNews from './RenderNews';
 const TabHeader = () => {
+  const [category, setCategory] = useState('General');
+  const handleTabChange = ({ref}) => {
+    setCategory(ref.props.heading);
+  };
   return (
     <Container>
       <HeaderTitle />
-      <Tabs>
-        <Tab heading="Tab1">{/* <Tab1 /> */}</Tab>
-        <Tab heading="Tab2">{/* <Tab2 /> */}</Tab>
-        <Tab heading="Tab3">{/* <Tab3 /> */}</Tab>
+      <Tabs
+        renderTabBar={() => <ScrollableTab />}
+        onChangeTab={(e) => handleTabChange(e)}>
+        <Tab heading="General">
+          <RenderNews category={category} />
+        </Tab>
+        <Tab heading="Health">
+          <RenderNews category={category} />
+        </Tab>
+        <Tab heading="Technology">
+          <RenderNews category={category} />
+        </Tab>
+        <Tab heading="Business">
+          <RenderNews category={category} />
+        </Tab>
+        <Tab heading="Entertainment">
+          <RenderNews category={category} />
+        </Tab>
+        <Tab heading="Sports">
+          <RenderNews category={category} />
+        </Tab>
+        <Tab heading="Science">
+          <RenderNews category={category} />
+        </Tab>
       </Tabs>
     </Container>
   );
