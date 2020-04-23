@@ -1,13 +1,13 @@
 import React from 'react';
-import {Container, Header, Left, Body, Right, Title} from 'native-base';
+import {Header, Left, Body, Right, Title} from 'native-base';
 const HeaderTitle = () => {
   return (
     <Header>
-      <Left />
-      <Body>
-        <Title>News</Title>
+      <Left style={{flex: 1}} />
+      <Body style={{flex: 1}}>
+        <Title style={{alignSelf: 'center'}}>News</Title>
       </Body>
-      <Right />
+      <Right style={{flex: 1}} />
     </Header>
   );
 };

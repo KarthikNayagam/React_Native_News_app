@@ -1,12 +1,5 @@
-import React, {Component, useState, useEffect} from 'react';
-import {
-  Container,
-  Header,
-  Content,
-  Tab,
-  Tabs,
-  ScrollableTab,
-} from 'native-base';
+import React, {useState, useEffect} from 'react';
+import {Container, Tab, Tabs, ScrollableTab} from 'native-base';
 import HeaderTitle from './Header';
 import RenderNews from './RenderNews';
 import axios from 'axios';
@@ -14,6 +7,15 @@ const TabHeader = () => {
   const [category, setCategory] = useState('General');
   const [content, setContent] = useState([]);
   const [loading, setLoading] = useState(true);
+  const tabList = [
+    'General',
+    'Health',
+    'Technology',
+    'Business',
+    'Entertainment',
+    'Sports',
+    'Science',
+  ];
   const handleTabChange = ({ref}) => {
     setCategory(ref.props.heading);
     setLoading(true);
@@ -36,10 +38,17 @@ const TabHeader = () => {
         renderTabBar={() => <ScrollableTab />}
         onChangeTab={(e) => handleTabChange(e)}
         tabDelay={0}>
-        <Tab heading="General">
-          <RenderNews category={category} content={content} loading={loading} />
-        </Tab>
-        <Tab heading="Health">
+        {tabList.map((obj) => (
+          <Tab heading={obj}>
+            <RenderNews
+              category={category}
+              content={content}
+              loading={loading}
+            />
+          </Tab>
+        ))}
+
+        {/* <Tab heading="Health">
           <RenderNews category={category} content={content} loading={loading} />
         </Tab>
         <Tab heading="Technology">
@@ -56,7 +65,7 @@ const TabHeader = () => {
         </Tab>
         <Tab heading="Science">
           <RenderNews category={category} content={content} loading={loading} />
-        </Tab>
+        </Tab> */}
       </Tabs>
     </Container>
   );
