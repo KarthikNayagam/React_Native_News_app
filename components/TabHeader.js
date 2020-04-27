@@ -5,7 +5,9 @@ import RenderNews from './RenderNews';
 import axios from 'axios';
 import MyWeb from './DetailedNews';
 import {BackHandler} from 'react-native';
-const TabHeader = () => {
+import {getSelectedArticles} from './utils/utils';
+const TabHeader = ({navigation, searchName}) => {
+  console.log('navigation searchName', searchName);
   const [category, setCategory] = useState('General');
   const [content, setContent] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -25,18 +27,19 @@ const TabHeader = () => {
     setLoading(true);
   };
   const handleViewClicked = (url) => {
-    console.log('url', url);
     setViewClicked(true);
     setDetailedLink(url);
   };
-
+  const handleArticles = (response) => {
+    return getSelectedArticles(response.data.articles, searchName);
+  };
   useEffect(() => {
     axios
       .get(
         `http://newsapi.org/v2/top-headlines?country=in&category=${category}&apiKey=2d44fa08b51e41a0b4e0c314e0c76c18`,
       )
       .then((response) => {
-        setContent(response.data.articles);
+        setContent(handleArticles(response));
         setLoading(false);
       });
     const backAction = () => {
@@ -54,7 +57,7 @@ const TabHeader = () => {
     <>
       {!viewClicked ? (
         <Container>
-          <HeaderTitle />
+          <HeaderTitle navigation={navigation} />
           <Tabs
             renderTabBar={() => <ScrollableTab />}
             onChangeTab={(e) => handleTabChange(e)}
