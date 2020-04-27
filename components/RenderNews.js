@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {ScrollView} from 'react-native';
-
+const moment = require('moment');
 import {
   List,
   ListItem,
@@ -12,7 +12,8 @@ import {
   Button,
   Spinner,
 } from 'native-base';
-const RenderNews = ({category, loading, content}) => {
+
+const RenderNews = ({category, loading, content, handleViewClicked}) => {
   return (
     <>
       {loading ? (
@@ -20,7 +21,8 @@ const RenderNews = ({category, loading, content}) => {
       ) : (
         <ScrollView>
           {content &&
-            content.map((obj) => {
+            content.map((obj, index) => {
+              console.log(' obj.urlToImage', obj);
               return (
                 <List>
                   <ListItem thumbnail>
@@ -28,17 +30,16 @@ const RenderNews = ({category, loading, content}) => {
                       <Thumbnail square source={{uri: obj.urlToImage}} />
                     </Left>
                     <Body>
-                      {/* <Text>Sankhadeep</Text>
-            <Text note numberOfLines={1}>
-              Its time to build a difference . .
-            </Text> */}
-                      <Text>{obj.title}</Text>
+                      <Text
+                        onPress={() => {
+                          handleViewClicked(obj.url);
+                        }}>
+                        {obj.title}
+                      </Text>
+                      <Text note numberOfLines={1}>
+                        {moment(obj.publishedAt).startOf('hour').fromNow()}
+                      </Text>
                     </Body>
-                    <Right>
-                      <Button transparent>
-                        <Text>View</Text>
-                      </Button>
-                    </Right>
                   </ListItem>
                 </List>
               );

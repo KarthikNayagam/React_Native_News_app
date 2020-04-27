@@ -3,10 +3,14 @@ import {Container, Tab, Tabs, ScrollableTab} from 'native-base';
 import HeaderTitle from './Header';
 import RenderNews from './RenderNews';
 import axios from 'axios';
+import MyWeb from './DetailedNews';
+import {BackHandler} from 'react-native';
 const TabHeader = () => {
   const [category, setCategory] = useState('General');
   const [content, setContent] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [viewClicked, setViewClicked] = useState(false);
+  const [detailedLink, setDetailedLink] = useState('');
   const tabList = [
     'General',
     'Health',
@@ -20,6 +24,11 @@ const TabHeader = () => {
     setCategory(ref.props.heading);
     setLoading(true);
   };
+  const handleViewClicked = (url) => {
+    console.log('url', url);
+    setViewClicked(true);
+    setDetailedLink(url);
+  };
 
   useEffect(() => {
     axios
@@ -30,44 +39,43 @@ const TabHeader = () => {
         setContent(response.data.articles);
         setLoading(false);
       });
+    const backAction = () => {
+      setViewClicked(false);
+      return true;
+    };
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      backAction,
+    );
+
+    return () => backHandler.remove();
   }, [category]);
   return (
-    <Container>
-      <HeaderTitle />
-      <Tabs
-        renderTabBar={() => <ScrollableTab />}
-        onChangeTab={(e) => handleTabChange(e)}
-        tabDelay={0}>
-        {tabList.map((obj) => (
-          <Tab heading={obj}>
-            <RenderNews
-              category={category}
-              content={content}
-              loading={loading}
-            />
-          </Tab>
-        ))}
-
-        {/* <Tab heading="Health">
-          <RenderNews category={category} content={content} loading={loading} />
-        </Tab>
-        <Tab heading="Technology">
-          <RenderNews category={category} content={content} loading={loading} />
-        </Tab>
-        <Tab heading="Business">
-          <RenderNews category={category} content={content} loading={loading} />
-        </Tab>
-        <Tab heading="Entertainment">
-          <RenderNews category={category} content={content} loading={loading} />
-        </Tab>
-        <Tab heading="Sports">
-          <RenderNews category={category} content={content} loading={loading} />
-        </Tab>
-        <Tab heading="Science">
-          <RenderNews category={category} content={content} loading={loading} />
-        </Tab> */}
-      </Tabs>
-    </Container>
+    <>
+      {!viewClicked ? (
+        <Container>
+          <HeaderTitle />
+          <Tabs
+            renderTabBar={() => <ScrollableTab />}
+            onChangeTab={(e) => handleTabChange(e)}
+            tabDelay={0}>
+            {tabList.map((obj) => (
+              <Tab heading={obj}>
+                <RenderNews
+                  category={category}
+                  content={content}
+                  loading={loading}
+                  handleViewClicked={handleViewClicked}
+                  viewClicked={viewClicked}
+                />
+              </Tab>
+            ))}
+          </Tabs>
+        </Container>
+      ) : (
+        <MyWeb detailedLink={detailedLink} />
+      )}
+    </>
   );
 };
 
