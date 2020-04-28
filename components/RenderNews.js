@@ -24,7 +24,7 @@ const RenderNews = ({category, loading, content, handleViewClicked}) => {
             content.map((obj, index) => {
               console.log(' obj.urlToImage', obj);
               return (
-                <List>
+                <List key={index}>
                   <ListItem thumbnail>
                     <Left>
                       <Thumbnail square source={{uri: obj.urlToImage}} />

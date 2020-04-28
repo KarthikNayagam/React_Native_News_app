@@ -15,7 +15,9 @@ const HeaderTitle = ({navigation}) => {
           />
         </Left>
         <Body style={{flex: 1}}>
-          <Title style={{alignSelf: 'center'}}>News - India</Title>
+          <Title style={{alignSelf: 'center'}}>
+            News - India <Icon name="edit" size={20} color="#fff" />
+          </Title>
         </Body>
         <Right style={{flex: 1}} />
       </Header>

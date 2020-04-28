@@ -3,33 +3,26 @@ import {Button, View, Text} from 'react-native';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import {NavigationContainer} from '@react-navigation/native';
 import TabHeader from '../TabHeader';
-function HomeScreen({navigation}) {
-  return (
-    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-      <Button
-        onPress={() => navigation.navigate('Notifications')}
-        title="Go to notifications"
-      />
-      <Text onPress={() => navigation.openDrawer()}>test1</Text>
-    </View>
-  );
-}
-
-function NotificationsScreen({navigation}) {
-  return (
-    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-      <Button onPress={() => navigation.goBack()} title="Go back home" />
-    </View>
-  );
-}
-
+import NavigationContent from './NavigationContent';
+import ListDividerExample from '../CountryPicker';
 const Drawer = createDrawerNavigator();
 
 function Navigation({navigation}) {
   return (
     <>
       <NavigationContainer>
-        <Drawer.Navigator initialRouteName="Home">
+        <Drawer.Navigator
+          initialRouteName="Home"
+          drawerStyle={{
+            fontSize: 25,
+          }}
+          drawerContentOptions={{
+            activeTintColor: '#1e73ea',
+            inactiveTintColor: '#828282',
+            labelStyle: {
+              fontSize: 15,
+            },
+          }}>
           <Drawer.Screen
             name="All News"
             component={(props) => (
@@ -38,9 +31,8 @@ function Navigation({navigation}) {
           />
           <Drawer.Screen
             name="The Times of India"
-            component={(props) => (
-              <TabHeader {...props} searchName="The Times of India" />
-            )}
+            component={ListDividerExample}
+            drawerBackgroundColor="red"
           />
           <Drawer.Screen
             name="Hindustan Times"
@@ -76,6 +68,12 @@ function Navigation({navigation}) {
             name="Live mint"
             component={(props) => (
               <TabHeader {...props} searchName="Livemint.com" />
+            )}
+          />
+          <Drawer.Screen
+            name="News 18"
+            component={(props) => (
+              <TabHeader {...props} searchName="News18.com" />
             )}
           />
         </Drawer.Navigator>
