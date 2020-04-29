@@ -4,7 +4,6 @@ import {createDrawerNavigator} from '@react-navigation/drawer';
 import {NavigationContainer} from '@react-navigation/native';
 import TabHeader from '../TabHeader';
 import NavigationContent from './NavigationContent';
-import ListDividerExample from '../CountryPicker';
 const Drawer = createDrawerNavigator();
 
 function Navigation({navigation}) {
@@ -31,7 +30,9 @@ function Navigation({navigation}) {
           />
           <Drawer.Screen
             name="The Times of India"
-            component={ListDividerExample}
+            component={(props) => (
+              <TabHeader {...props} searchName="The Times of India" />
+            )}
             drawerBackgroundColor="red"
           />
           <Drawer.Screen

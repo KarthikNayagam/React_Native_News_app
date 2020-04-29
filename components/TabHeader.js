@@ -6,6 +6,7 @@ import axios from 'axios';
 import MyWeb from './DetailedNews';
 import {BackHandler} from 'react-native';
 import {getSelectedArticles} from './utils/utils';
+import CountryPicker from './CountryPicker';
 const TabHeader = ({navigation, searchName}) => {
   console.log('navigation searchName', searchName);
   const [category, setCategory] = useState('General');
@@ -13,6 +14,11 @@ const TabHeader = ({navigation, searchName}) => {
   const [loading, setLoading] = useState(true);
   const [viewClicked, setViewClicked] = useState(false);
   const [detailedLink, setDetailedLink] = useState('');
+  const [displayCountryPicker, setCountryPicker] = useState(false);
+  const [selectedCountry, setSelectedCountry] = useState({
+    code: 'in',
+    name: 'India',
+  });
   const tabList = [
     'General',
     'Health',
@@ -33,10 +39,21 @@ const TabHeader = ({navigation, searchName}) => {
   const handleArticles = (response) => {
     return getSelectedArticles(response.data.articles, searchName);
   };
+  const handleCountryPicker = () => {
+    setCountryPicker(true);
+  };
+  const handleSelectedCountry = (countryCode, countryName) => {
+    setSelectedCountry({
+      ...selectedCountry,
+      code: countryCode,
+      name: countryName,
+    });
+    setCountryPicker(false);
+  };
   useEffect(() => {
     axios
       .get(
-        `http://newsapi.org/v2/top-headlines?country=in&category=${category}&apiKey=2d44fa08b51e41a0b4e0c314e0c76c18`,
+        `http://newsapi.org/v2/top-headlines?country=${selectedCountry.code}&category=${category}&apiKey=2d44fa08b51e41a0b4e0c314e0c76c18`,
       )
       .then((response) => {
         setContent(handleArticles(response));
@@ -52,28 +69,38 @@ const TabHeader = ({navigation, searchName}) => {
     );
 
     return () => backHandler.remove();
-  }, [category]);
+  }, [category, selectedCountry]);
   return (
     <>
       {!viewClicked ? (
         <Container>
-          <HeaderTitle navigation={navigation} />
-          <Tabs
-            renderTabBar={() => <ScrollableTab />}
-            onChangeTab={(e) => handleTabChange(e)}
-            tabDelay={0}>
-            {tabList.map((obj) => (
-              <Tab heading={obj}>
-                <RenderNews
-                  category={category}
-                  content={content}
-                  loading={loading}
-                  handleViewClicked={handleViewClicked}
-                  viewClicked={viewClicked}
-                />
-              </Tab>
-            ))}
-          </Tabs>
+          {displayCountryPicker ? (
+            <CountryPicker handleSelectedCountry={handleSelectedCountry} />
+          ) : (
+            <>
+              <HeaderTitle
+                navigation={navigation}
+                handleCountryPicker={handleCountryPicker}
+                selectedCountry={selectedCountry}
+              />
+              <Tabs
+                renderTabBar={() => <ScrollableTab />}
+                onChangeTab={(e) => handleTabChange(e)}
+                tabDelay={0}>
+                {tabList.map((obj) => (
+                  <Tab heading={obj}>
+                    <RenderNews
+                      category={category}
+                      content={content}
+                      loading={loading}
+                      handleViewClicked={handleViewClicked}
+                      viewClicked={viewClicked}
+                    />
+                  </Tab>
+                ))}
+              </Tabs>
+            </>
+          )}
         </Container>
       ) : (
         <MyWeb detailedLink={detailedLink} />
