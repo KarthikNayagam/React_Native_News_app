@@ -1,4 +1,4 @@
-export const countryList = [
+export const defaultCountryList = [
   {
     dividerText: 'A',
     list: [

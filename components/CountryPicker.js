@@ -23,11 +23,36 @@ let austria = require('../images/austria.jpg');
 let belgium = require('../images/belgium.jpg');
 let brazil = require('../images/brazil.jpg');
 let bulgaria = require('../images/bulgaria.jpg');
-import {countryList} from './constants/constants';
+import {defaultCountryList} from './constants/constants';
 const CountryPicker = ({handleSelectedCountry}) => {
   const [enteredText, setEnteredText] = useState('');
+  const [countryList, setCountryList] = useState(defaultCountryList);
   const handleEnteredText = (text) => {
-    setEnteredText(text);
+    handleSearchChange(text.nativeEvent.text);
+    setEnteredText(text.nativeEvent.text);
+  };
+  const handleSearchChange = (text) => {
+    let searchedParentObj = '';
+    if (text.length > 0) {
+      searchedParentObj = defaultCountryList.find((obj) => {
+        return (
+          obj.dividerText.toLowerCase().substring(0, 1).trim() ===
+          text.toLowerCase().substring(0, 1).trim()
+        );
+      });
+      if (typeof searchedParentObj !== 'undefined') {
+        const searchedObj = searchedParentObj.list.filter((obj) => {
+          return obj.countryName.toLowerCase().indexOf(text) !== -1;
+        });
+
+        searchedParentObj = {...searchedParentObj, list: searchedObj};
+        setCountryList([searchedParentObj]);
+      } else {
+        setCountryList(defaultCountryList);
+      }
+    } else {
+      setCountryList(defaultCountryList);
+    }
   };
   return (
     <>
@@ -39,7 +64,9 @@ const CountryPicker = ({handleSelectedCountry}) => {
             value={enteredText}
             onChange={(text) => handleEnteredText(text)}
           />
-          <Icon name="close" />
+          {enteredText.length > 0 && (
+            <Icon name="close" onPress={() => setEnteredText('')} />
+          )}
         </Item>
         <Button transparent>
           <Text>Search</Text>
