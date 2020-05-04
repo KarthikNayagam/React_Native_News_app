@@ -16,7 +16,7 @@ const HeaderTitle = ({navigation, handleCountryPicker, selectedCountry}) => {
         </Left>
         <Body style={{flex: 1}}>
           <Title style={{alignSelf: 'center'}}>
-            News - {selectedCountry.name}
+            News - {selectedCountry && selectedCountry.name}
           </Title>
         </Body>
         <Right style={{flex: 1}}>

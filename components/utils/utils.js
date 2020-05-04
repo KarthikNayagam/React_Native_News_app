@@ -7,3 +7,23 @@ export const getSelectedArticles = (array, searchName) => {
     return array;
   }
 };
+
+export const getDynamicCategories = (articles) => {
+  const categoryList = [];
+  articles.map((item) => {
+    item.source.name && categoryList.push(item.source.name);
+  });
+  return removeDuplicates(retrieveDuplicates(categoryList));
+};
+
+const removeDuplicates = (listItems) => {
+  return listItems.filter((item, index) => {
+    return listItems.indexOf(item) === index;
+  });
+};
+
+const retrieveDuplicates = (listItems) => {
+  return listItems.filter((item, index) => {
+    return listItems.indexOf(item) !== index;
+  });
+};

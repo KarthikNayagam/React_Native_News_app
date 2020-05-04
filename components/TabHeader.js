@@ -5,10 +5,9 @@ import RenderNews from './RenderNews';
 import axios from 'axios';
 import MyWeb from './DetailedNews';
 import {BackHandler} from 'react-native';
-import {getSelectedArticles} from './utils/utils';
+import {getSelectedArticles, getDynamicCategories} from './utils/utils';
 import CountryPicker from './CountryPicker';
 const TabHeader = ({navigation, searchName}) => {
-  console.log('navigation searchName', searchName);
   const [category, setCategory] = useState('General');
   const [content, setContent] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -37,6 +36,7 @@ const TabHeader = ({navigation, searchName}) => {
     setDetailedLink(url);
   };
   const handleArticles = (response) => {
+    getDynamicCategories(response.data.articles);
     return getSelectedArticles(response.data.articles, searchName);
   };
   const handleCountryPicker = () => {

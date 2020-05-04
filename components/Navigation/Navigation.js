@@ -1,12 +1,28 @@
-import * as React from 'react';
+import React, {useEffect, useState} from 'react';
 import {Button, View, Text} from 'react-native';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import {NavigationContainer} from '@react-navigation/native';
 import TabHeader from '../TabHeader';
 import NavigationContent from './NavigationContent';
+import NewsSwiper from '../NewsSwiper';
+import NewsCard from '../NewsCard';
+import {getSelectedArticles, getDynamicCategories} from '../utils/utils';
+
 const Drawer = createDrawerNavigator();
+import axios from 'axios';
 
 function Navigation({navigation}) {
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get(
+        'https://newsapi.org/v2/sources?country=gb&apiKey=2d44fa08b51e41a0b4e0c314e0c76c18',
+      )
+      .then((response) => {
+        setCategories(response.data.sources);
+      });
+  }, []);
   return (
     <>
       <NavigationContainer>
@@ -29,54 +45,21 @@ function Navigation({navigation}) {
             )}
           />
           <Drawer.Screen
-            name="The Times of India"
+            name="Briefs"
             component={(props) => (
-              <TabHeader {...props} searchName="The Times of India" />
-            )}
-            drawerBackgroundColor="red"
-          />
-          <Drawer.Screen
-            name="Hindustan Times"
-            component={(props) => (
-              <TabHeader {...props} searchName="Hindustantimes.com" />
+              <NewsSwiper {...props} searchName="The Times of India" />
             )}
           />
-          <Drawer.Screen
-            name="India Today"
-            component={(props) => (
-              <TabHeader {...props} searchName="Indiatoday.in" />
-            )}
-          />
-          <Drawer.Screen
-            name="Moneycontrol"
-            component={(props) => (
-              <TabHeader {...props} searchName="Moneycontrol.com" />
-            )}
-          />
-          <Drawer.Screen
-            name="The Hindu"
-            component={(props) => (
-              <TabHeader {...props} searchName="The Hindu" />
-            )}
-          />
-          <Drawer.Screen
-            name="Business Standard"
-            component={(props) => (
-              <TabHeader {...props} searchName="Business-standard.com" />
-            )}
-          />
-          <Drawer.Screen
-            name="Live mint"
-            component={(props) => (
-              <TabHeader {...props} searchName="Livemint.com" />
-            )}
-          />
-          <Drawer.Screen
-            name="News 18"
-            component={(props) => (
-              <TabHeader {...props} searchName="News18.com" />
-            )}
-          />
+          {categories.length > 0 &&
+            categories.map((obj) => (
+              <Drawer.Screen
+                name={obj.name}
+                component={(props) => (
+                  <NewsCard {...props} searchName={obj} url={obj.url} />
+                )}
+                drawerBackgroundColor="red"
+              />
+            ))}
         </Drawer.Navigator>
       </NavigationContainer>
     </>
