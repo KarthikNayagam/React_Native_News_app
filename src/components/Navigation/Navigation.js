@@ -18,6 +18,7 @@ function Navigation({navigation}) {
   const {code, name} = country;
 
   useEffect(() => {
+    setCategories([]);
     axios
       .get(
         `https://newsapi.org/v2/sources?country=${code}&apiKey=2d44fa08b51e41a0b4e0c314e0c76c18`,

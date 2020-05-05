@@ -50,7 +50,7 @@ const TabHeader = ({navigation, searchName, code, name}) => {
     console.log('inside render useEffect');
     axios
       .get(
-        `http://newsapi.org/v2/top-headlines?country=in&category=${category}&apiKey=2d44fa08b51e41a0b4e0c314e0c76c18`,
+        `http://newsapi.org/v2/top-headlines?country=${code}&category=${category}&apiKey=2d44fa08b51e41a0b4e0c314e0c76c18`,
       )
       .then((response) => {
         setContent(handleArticles(response));
@@ -66,7 +66,7 @@ const TabHeader = ({navigation, searchName, code, name}) => {
     );
 
     return () => backHandler.remove();
-  }, []);
+  }, [category, code]);
   return (
     <>
       {!viewClicked ? (

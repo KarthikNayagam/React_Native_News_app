@@ -23,7 +23,6 @@ import {
 } from 'native-base';
 
 const NewsSwiper = ({searchName, navigation, code, name}) => {
-  const [category, setCategory] = useState('General');
   const [content, setContent] = useState([]);
   const dispatch = useDispatch();
   const showCountryPicker = useSelector((state) => state.showCountryPicker);
@@ -41,12 +40,12 @@ const NewsSwiper = ({searchName, navigation, code, name}) => {
   useEffect(() => {
     axios
       .get(
-        `http://newsapi.org/v2/top-headlines?country=${code}&category=${category}&apiKey=2d44fa08b51e41a0b4e0c314e0c76c18`,
+        `http://newsapi.org/v2/top-headlines?country=${code}&category=General&apiKey=2d44fa08b51e41a0b4e0c314e0c76c18`,
       )
       .then((response) => {
         setContent(handleArticles(response));
       });
-  }, [code, category]);
+  }, [code]);
   return (
     <Container>
       {showCountryPicker ? (
