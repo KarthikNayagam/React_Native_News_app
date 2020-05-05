@@ -1,8 +1,13 @@
-import React, {useRef} from 'react';
-import {Header, Left, Body, Right, Title, Drawer, Text} from 'native-base';
+import React from 'react';
+import {Header, Left, Body, Right, Title} from 'native-base';
 import Icon from 'react-native-vector-icons/FontAwesome';
-
-const HeaderTitle = ({navigation, handleCountryPicker, selectedCountry}) => {
+import {useDispatch} from 'react-redux';
+import {setCountryPicker} from '../actions/Action';
+const HeaderTitle = ({navigation, name}) => {
+  const dispatch = useDispatch();
+  const handleCountryPicker = () => {
+    dispatch(setCountryPicker(true));
+  };
   return (
     <>
       <Header>
@@ -15,9 +20,7 @@ const HeaderTitle = ({navigation, handleCountryPicker, selectedCountry}) => {
           />
         </Left>
         <Body style={{flex: 1}}>
-          <Title style={{alignSelf: 'center'}}>
-            News - {selectedCountry && selectedCountry.name}
-          </Title>
+          <Title style={{alignSelf: 'center'}}>News - {name && name}</Title>
         </Body>
         <Right style={{flex: 1}}>
           <Icon

@@ -4,17 +4,17 @@ export const defaultCountryList = [
     list: [
       {
         countryName: 'Argentina',
-        imageUrl: require('../../images/argentina.jpg'),
+        imageUrl: require('../images/argentina.jpg'),
         countryCode: 'ar',
       },
       {
         countryName: 'Australia',
-        imageUrl: require('../../images/australia.png'),
+        imageUrl: require('../images/australia.png'),
         countryCode: 'au',
       },
       {
         countryName: 'Austria',
-        imageUrl: require('../../images/austria.jpg'),
+        imageUrl: require('../images/austria.jpg'),
         countryCode: 'at',
       },
     ],
@@ -24,17 +24,17 @@ export const defaultCountryList = [
     list: [
       {
         countryName: 'Belgium',
-        imageUrl: require('../../images/belgium.jpg'),
+        imageUrl: require('../images/belgium.jpg'),
         countryCode: 'be',
       },
       {
         countryName: 'Brazil',
-        imageUrl: require('../../images/brazil.jpg'),
+        imageUrl: require('../images/brazil.jpg'),
         countryCode: 'br',
       },
       {
         countryName: 'Bulgaria',
-        imageUrl: require('../../images/bulgaria.jpg'),
+        imageUrl: require('../images/bulgaria.jpg'),
         countryCode: 'bg',
       },
     ],
@@ -44,27 +44,27 @@ export const defaultCountryList = [
     list: [
       {
         countryName: 'Canada',
-        imageUrl: require('../../images/canada.jpg'),
+        imageUrl: require('../images/canada.jpg'),
         countryCode: 'ca',
       },
       {
         countryName: 'China',
-        imageUrl: require('../../images/china.jpg'),
+        imageUrl: require('../images/china.jpg'),
         countryCode: 'cn',
       },
       {
         countryName: 'Colombia',
-        imageUrl: require('../../images/colombia.jpg'),
+        imageUrl: require('../images/colombia.jpg'),
         countryCode: 'co',
       },
       {
         countryName: 'Cuba',
-        imageUrl: require('../../images/cuba.jpg'),
+        imageUrl: require('../images/cuba.jpg'),
         countryCode: 'cu',
       },
       {
         countryName: 'Czech Republic',
-        imageUrl: require('../../images/czech.jpg'),
+        imageUrl: require('../images/czech.jpg'),
         countryCode: 'cz',
       },
     ],
@@ -74,7 +74,7 @@ export const defaultCountryList = [
     list: [
       {
         countryName: 'Egypt',
-        imageUrl: require('../../images/egypt.jpg'),
+        imageUrl: require('../images/egypt.jpg'),
         countryCode: 'eg',
       },
     ],
@@ -84,7 +84,7 @@ export const defaultCountryList = [
     list: [
       {
         countryName: 'France',
-        imageUrl: require('../../images/france.png'),
+        imageUrl: require('../images/france.png'),
         countryCode: 'fr',
       },
     ],
@@ -94,12 +94,12 @@ export const defaultCountryList = [
     list: [
       {
         countryName: 'Germany',
-        imageUrl: require('../../images/germany.png'),
+        imageUrl: require('../images/germany.png'),
         countryCode: 'de',
       },
       {
         countryName: 'Greece',
-        imageUrl: require('../../images/greece.png'),
+        imageUrl: require('../images/greece.png'),
         countryCode: 'gr',
       },
     ],
@@ -109,12 +109,12 @@ export const defaultCountryList = [
     list: [
       {
         countryName: 'Hong Kong',
-        imageUrl: require('../../images/france.png'),
+        imageUrl: require('../images/france.png'),
         countryCode: 'hk',
       },
       {
         countryName: 'Hungary',
-        imageUrl: require('../../images/hungary.png'),
+        imageUrl: require('../images/hungary.png'),
         countryCode: 'hu',
       },
     ],
@@ -124,27 +124,27 @@ export const defaultCountryList = [
     list: [
       {
         countryName: 'India',
-        imageUrl: require('../../images/india.png'),
+        imageUrl: require('../images/india.png'),
         countryCode: 'in',
       },
       {
         countryName: 'Indonesia',
-        imageUrl: require('../../images/indonesia.png'),
+        imageUrl: require('../images/indonesia.png'),
         countryCode: 'id',
       },
       {
         countryName: 'Ireland',
-        imageUrl: require('../../images/ireland.png'),
+        imageUrl: require('../images/ireland.png'),
         countryCode: 'ie',
       },
       {
         countryName: 'Israel',
-        imageUrl: require('../../images/israel.png'),
+        imageUrl: require('../images/israel.png'),
         countryCode: 'il',
       },
       {
         countryName: 'Italy',
-        imageUrl: require('../../images/italy.png'),
+        imageUrl: require('../images/italy.png'),
         countryCode: 'it',
       },
     ],
@@ -154,7 +154,7 @@ export const defaultCountryList = [
     list: [
       {
         countryName: 'Japan',
-        imageUrl: require('../../images/france.png'),
+        imageUrl: require('../images/france.png'),
         countryCode: 'jp',
       },
     ],
@@ -164,11 +164,11 @@ export const defaultCountryList = [
     list: [
       {
         countryName: 'Latvia',
-        imageUrl: require('../../images/france.png'),
+        imageUrl: require('../images/france.png'),
       },
       {
         countryName: 'Lithuania',
-        imageUrl: require('../../images/france.png'),
+        imageUrl: require('../images/france.png'),
       },
     ],
   },
@@ -177,11 +177,11 @@ export const defaultCountryList = [
     list: [
       {
         countryName: 'Latvia',
-        imageUrl: require('../../images/france.png'),
+        imageUrl: require('../images/france.png'),
       },
       {
         countryName: 'Lithuania',
-        imageUrl: require('../../images/france.png'),
+        imageUrl: require('../images/france.png'),
       },
     ],
   },

@@ -1,0 +1,2 @@
+export const SET_COUNTRY = 'SET_COUNTRY';
+export const SET_COUNTRY_PICKER = 'SET_COUNTRY_PICKER';

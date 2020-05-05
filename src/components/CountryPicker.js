@@ -16,14 +16,7 @@ import {
   Input,
   Button,
 } from 'native-base';
-//import Icon from 'react-native-vector-icons/FontAwesome';
-let argentina = require('../images/argentina.jpg');
-let australia = require('../images/australia-small.png');
-let austria = require('../images/austria.jpg');
-let belgium = require('../images/belgium.jpg');
-let brazil = require('../images/brazil.jpg');
-let bulgaria = require('../images/bulgaria.jpg');
-import {defaultCountryList} from './constants/constants';
+import {defaultCountryList} from '../constants/constants';
 const CountryPicker = ({handleSelectedCountry}) => {
   const [enteredText, setEnteredText] = useState('');
   const [countryList, setCountryList] = useState(defaultCountryList);
@@ -54,6 +47,7 @@ const CountryPicker = ({handleSelectedCountry}) => {
       setCountryList(defaultCountryList);
     }
   };
+
   return (
     <>
       <Header searchBar rounded>
