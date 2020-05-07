@@ -1,4 +1,8 @@
-import {SET_COUNTRY, SET_COUNTRY_PICKER} from '../actions/ActionType';
+import {
+  SET_COUNTRY,
+  SET_COUNTRY_PICKER,
+  SET_ARTICLES,
+} from '../actions/ActionType';
 
 const initialState = {
   country: {
@@ -6,6 +10,7 @@ const initialState = {
     code: 'in',
   },
   showCountryPicker: false,
+  articleContent: '',
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -19,6 +24,11 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         showCountryPicker: action.payload,
+      };
+    case SET_ARTICLES:
+      return {
+        ...state,
+        articleContent: action.payload,
       };
     default:
       return state;

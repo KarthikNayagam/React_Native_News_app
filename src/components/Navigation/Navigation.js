@@ -1,35 +1,36 @@
 import React, {useEffect, useState} from 'react';
-import {Button, View, Text} from 'react-native';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import {NavigationContainer} from '@react-navigation/native';
 import TabHeader from '../TabHeader';
-import NavigationContent from './NavigationContent';
 import NewsSwiper from '../NewsSwiper';
 import NewsCard from '../NewsCard';
-import {getSelectedArticles, getDynamicCategories} from '../utils/utils';
-import {useSelector} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
+import {sourceDomain, apiKey, sourceHeadLines} from '../../constants/endpoints';
+import {setArticles} from '../../actions/Action';
 const Drawer = createDrawerNavigator();
 import axios from 'axios';
-
+import {Spinner} from 'native-base';
+import {useFetchMultiple} from '../customHook/useFetch';
 function Navigation({navigation}) {
-  const [categories, setCategories] = useState([]);
   const country = useSelector((state) => state.country);
   console.log('country inside navigation', country);
   const {code, name} = country;
+  const dispatch = useDispatch();
+  const getSources = axios.get(
+    `${sourceDomain}?country=${code}&apiKey=${apiKey}`,
+  );
+  const getArticles = axios.get(
+    `${sourceHeadLines}?country=${code}&category=General&apiKey=${apiKey}`,
+  );
+  const res = useFetchMultiple(getSources, getArticles, code);
 
-  useEffect(() => {
-    setCategories([]);
-    axios
-      .get(
-        `https://newsapi.org/v2/sources?country=${code}&apiKey=2d44fa08b51e41a0b4e0c314e0c76c18`,
-      )
-      .then((response) => {
-        setCategories(response.data.sources);
-      });
-  }, [code]);
+  const {articles, loading, categories} = res;
+  dispatch(setArticles(articles));
   return (
     <>
-      {categories.length > 0 ? (
+      {loading ? (
+        <Spinner color="blue" />
+      ) : (
         <NavigationContainer>
           <Drawer.Navigator
             initialRouteName="Home"
@@ -51,6 +52,7 @@ function Navigation({navigation}) {
                   searchName="All News"
                   code={code}
                   name={name}
+                  content={articles.articles}
                 />
               )}
             />
@@ -65,27 +67,27 @@ function Navigation({navigation}) {
                 />
               )}
             />
-            {categories.map((obj) => (
-              <Drawer.Screen
-                name={obj.name}
-                component={(props) => (
-                  <NewsCard
-                    {...props}
-                    searchName={obj}
-                    url={obj.url}
-                    code={code}
-                    name={name}
+            {categories.sources &&
+              categories.sources.map((obj) => {
+                console.log('obj1', obj);
+                return (
+                  <Drawer.Screen
+                    name={obj.name}
+                    component={(props) => (
+                      <NewsCard
+                        {...props}
+                        searchName={obj}
+                        url={obj.url}
+                        code={code}
+                        name={name}
+                      />
+                    )}
+                    drawerBackgroundColor="red"
                   />
-                )}
-                drawerBackgroundColor="red"
-              />
-            ))}
+                );
+              })}
           </Drawer.Navigator>
         </NavigationContainer>
-      ) : (
-        <View>
-          <Text>Loading</Text>
-        </View>
       )}
     </>
   );
