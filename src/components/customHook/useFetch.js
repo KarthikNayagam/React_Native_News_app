@@ -19,3 +19,21 @@ export const useFetchMultiple = (getSources, getArticles, code) => {
   }, [code]);
   return {categories, articles, loading};
 };
+
+export const useFetch = (code, heading) => {
+  const [loading, setLoading] = useState(false);
+  const [response, setResponse] = useState('');
+  useEffect(() => {
+    setLoading(true);
+    axios
+      .get(
+        `http://newsapi.org/v2/top-headlines?country=${code}&category=${heading}&apiKey=2d44fa08b51e41a0b4e0c314e0c76c18`,
+      )
+      .then((res) => {
+        setResponse(res.data.articles);
+        setLoading(false);
+      });
+  }, [heading]);
+
+  return {response, loading};
+};

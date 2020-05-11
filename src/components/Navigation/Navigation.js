@@ -25,7 +25,7 @@ function Navigation({navigation}) {
   const res = useFetchMultiple(getSources, getArticles, code);
 
   const {articles, loading, categories} = res;
-  dispatch(setArticles(articles));
+  dispatch(setArticles(articles.articles));
   return (
     <>
       {loading ? (

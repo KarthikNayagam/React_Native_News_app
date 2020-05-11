@@ -8,11 +8,12 @@ import {BackHandler} from 'react-native';
 import CountryPicker from './CountryPicker';
 import {useSelector, useDispatch} from 'react-redux';
 import {setCountry, setCountryPicker, setArticles} from '../actions/Action';
+import {useFetch} from './customHook/useFetch';
 const TabHeader = ({navigation, searchName, code, name, content}) => {
   //const [content, setContent] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [viewClicked, setViewClicked] = useState(false);
   const [detailedLink, setDetailedLink] = useState('');
+  const [tabHeading, setTabHeading] = useState('General');
   const dispatch = useDispatch();
   const showCountryPicker = useSelector((state) => state.showCountryPicker);
   const articleContent = useSelector((state) => state.articleContent);
@@ -27,16 +28,16 @@ const TabHeader = ({navigation, searchName, code, name, content}) => {
     'Science',
   ];
   const handleTabChange = ({ref}) => {
-    axios
-      .get(
-        `http://newsapi.org/v2/top-headlines?country=${code}&category=${ref.props.heading}&apiKey=2d44fa08b51e41a0b4e0c314e0c76c18`,
-      )
-      .then((response) => {
-        dispatch(setArticles(response.data.articles));
-        setLoading(false);
-      });
-    setLoading(true);
+    setTabHeading(ref.props.heading);
   };
+
+  const {loading, response} = useFetch(code, tabHeading);
+  if (response) {
+    dispatch(setArticles(response));
+  }
+
+  console.log('response tab change', loading);
+
   const handleViewClicked = (url) => {
     setViewClicked(true);
     setDetailedLink(url);
@@ -78,7 +79,7 @@ const TabHeader = ({navigation, searchName, code, name, content}) => {
                 {tabList.map((obj) => (
                   <Tab heading={obj}>
                     <RenderNews
-                      content={content}
+                      content={articleContent}
                       loading={loading}
                       handleViewClicked={handleViewClicked}
                       viewClicked={viewClicked}

@@ -13,36 +13,39 @@ import {
   Spinner,
 } from 'native-base';
 
-const RenderNews = ({category, loading, content, handleViewClicked}) => {
+const RenderNews = ({loading, content, handleViewClicked}) => {
   return (
     <>
-      <ScrollView>
-        {content &&
-          content.length > 0 &&
-          content.map((obj, index) => {
-            console.log(' obj.urlToImage', obj);
-            return (
-              <List key={index}>
-                <ListItem thumbnail>
-                  <Left>
-                    <Thumbnail square source={{uri: obj.urlToImage}} />
-                  </Left>
-                  <Body>
-                    <Text
-                      onPress={() => {
-                        handleViewClicked(obj.url);
-                      }}>
-                      {obj.title}
-                    </Text>
-                    <Text note numberOfLines={1}>
-                      {moment(obj.publishedAt).startOf('hour').fromNow()}
-                    </Text>
-                  </Body>
-                </ListItem>
-              </List>
-            );
-          })}
-      </ScrollView>
+      {loading ? (
+        <Spinner color="blue" />
+      ) : (
+        <ScrollView>
+          {content &&
+            content.map((obj, index) => {
+              console.log(' obj.urlToImage', obj);
+              return (
+                <List key={index}>
+                  <ListItem thumbnail>
+                    <Left>
+                      <Thumbnail square source={{uri: obj.urlToImage}} />
+                    </Left>
+                    <Body>
+                      <Text
+                        onPress={() => {
+                          handleViewClicked(obj.url);
+                        }}>
+                        {obj.title}
+                      </Text>
+                      <Text note numberOfLines={1}>
+                        {moment(obj.publishedAt).startOf('hour').fromNow()}
+                      </Text>
+                    </Body>
+                  </ListItem>
+                </List>
+              );
+            })}
+        </ScrollView>
+      )}
     </>
   );
 };
